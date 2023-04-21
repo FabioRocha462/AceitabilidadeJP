@@ -1,0 +1,24 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Create {% endblock %}
+{% block content %}
+<div class="table-responsive">
+    <table class="table table-bordered table-md">
+        <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th class="col-md-2 center-block">Ações</th>
+        </tr>
+        {% for Food in object_list %}
+        <tr>
+            <td><a class="btn btn-success" href="#">{{ forloop.counter }}</a></td>
+            <td><a id="food_detail" class="btn btn-success" href="#">{{Food.name}}</a></td>
+            <td class="col-md-2 center-block text-center">
+                <a href="#" class="btn btn-primary">Editar</a>
+                <a href="/Myapp/delete/{{Food.uuid}}/" class="btn btn-danger">Remover</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

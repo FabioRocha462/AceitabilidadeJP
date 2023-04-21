@@ -1,0 +1,13 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} classroom food detail {% endblock %}
+{% block content %}
+<h1>{{classroom_food.food}}</h1>
+<hr>
+<h1>{{classroom_food.classroom}}</h1>
+<div class="center">
+    <img src="/Myapp/graphic/{{id}}/" alt="Bargraph">
+</div>
+<p><button class="btn btn-warning">{{classroom_food.disliked}}</button></p>
+<p><button class="btn btn-primary">{{classroom_food.liked}}</button></p>
+{% endblock %}

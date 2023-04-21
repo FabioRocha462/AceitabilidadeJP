@@ -1,0 +1,14 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Confirme Delete Food {% endblock %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <h2>Excluir o produto {{food.name}}?</h2>
+    <p>Você tem certeza em excluir {{food.name}}?</p>
+    <p class="form-buttons">
+        <input type="submit" class="btn btn-danger" value="Delete">
+        <a href="/despesas/list" class="btn btn-success">Cancel</a>
+    </p>
+</form>
+{% endblock %}

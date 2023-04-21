@@ -1,0 +1,31 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Class Detail {% endblock %}
+{% block content %}
+<section class="section">
+    <div class="section-body">
+        <h2 class="section-title">{{classroom.name}}</h2>
+    </div>
+    <p class="section-lead">
+        Alimentos relacionada a turma {{classroom.name}}
+    </p>
+    <div class="table-responsive">
+        <table class="table table-bordered table-md">
+            <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th class="col-md-2 center-block">Ações</th>
+            </tr>
+            {% for food in classroom_food %}
+            <tr>
+                <td><a class="btn btn-success" href="#">{{ forloop.counter }}</a></td>
+                <td><a id="food_detail" class="btn btn-success" href="/Myapp/classroom_food_detail/{{food.id}}/">{{food.food}}</a></td>
+                <td class="col-md-2 center-block text-center">
+                    <a href="#" class="btn btn-primary">Editar</a>
+                    <a href="/Myapp/delete/{{Food.uuid}}/" class="btn btn-danger">Remover</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+</section>
+{% endblock %}
