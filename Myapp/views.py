@@ -72,6 +72,7 @@ class SchoolDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         school = School.objects.get(uuid = self.kwargs.get("uuid"))
         context['classroom'] = Classroom.objects.filter(school = school).order_by('name')
+        context['Foods'] = Food.objects.all().order_by('name')
         return context
 
 class ClassroomDetailView(LoginRequiredMixin, DetailView):
@@ -148,6 +149,54 @@ def graphicFood(request, uuid):
     plt.savefig("bargraph1.png")
     return FileResponse(open("bargraph1.png", "rb"), content_type="image/png")
 
+
+@login_required
+
+def foodForSchool(request,uuid_school,uuid_food):
+
+    school = School.objects.get(uuid = uuid_school)
+    food = Food.objects.get(uuid = uuid_food)
+    classrooms = school.classroom_set.all()
+    liked_sum, disliked_sum = 0 , 0
+
+    for classroom in classrooms:
+
+        classroom_food = Classroom_Food.objects.filter(classroom = classroom).filter(food = food)
+        liked_sum = liked_sum + classroom_food[0].liked
+        disliked_sum = disliked_sum + classroom_food[0].disliked
+
+    return render(request, 'Myapp/food_for_school.html',{"food":food,"school":school,"liked_sum":liked_sum,"disliked_sum":disliked_sum})
+    
+@login_required
+
+def graphicFood_for_School(request,uuid_school,uuid_food):
+
+    school = School.objects.get(uuid = uuid_school)
+    food = Food.objects.get(uuid = uuid_food)
+    classrooms = school.classroom_set.all()
+    liked_sum, disliked_sum = 0 , 0
+
+    for classroom in classrooms:
+
+        classroom_food = Classroom_Food.objects.filter(classroom = classroom).filter(food = food)
+        liked_sum = liked_sum + classroom_food[0].liked
+        disliked_sum = disliked_sum + classroom_food[0].disliked
+    
+    labels = ["like", "dislike"]
+    values = [liked_sum,disliked_sum]
+    fig, ax = plt.subplots()
+    ax.pie(values,labels=labels,autopct='%1.1f%%', shadow=True,startangle=90)
+    ax.axis('equal')
+    plt.savefig("bargraph2.png")
+    return FileResponse(open("bargraph2.png", "rb"), content_type="image/png")
+
+
+
+
+
+    
+    
+    # return render(request, "templates/Myapp/food_for_school.html",{'food':food, 'liked':liked})
 
 
 
