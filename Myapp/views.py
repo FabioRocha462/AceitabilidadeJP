@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 import matplotlib.pyplot as plt
 from django.http import FileResponse
+from django.db.models import Sum
 
 #My imports
 from . models import Classroom_Food, Food, Classroom,School 
@@ -112,6 +113,41 @@ def graphic(request, id):
     ax.axis('equal')
     plt.savefig("bargraph.png")
     return FileResponse(open("bargraph.png", "rb"), content_type="image/png")
+
+
+
+#Food
+
+class FoodDetail(LoginRequiredMixin, DetailView):
+
+    model = Food
+    slug_url_kwarg = 'uuid'
+    slug_field = 'uuid'
+    context_object_name = 'food'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        uuid = self.kwargs.get("uuid")
+        food = Food.objects.get(uuid = uuid)
+        liked = Classroom_Food.objects.filter(food = food).aggregate(sum=Sum('liked'))
+        dislike = Classroom_Food.objects.filter(food = food).aggregate(sum=Sum('disliked'))
+        context['liked'] = liked['sum']
+        context['disliked'] = dislike['sum']
+        return context
+
+@login_required
+def graphicFood(request, uuid):
+    labels = ["like", "dislike"]
+    food = Food.objects.get(uuid = uuid)
+    liked = Classroom_Food.objects.filter(food = food).aggregate(sum=Sum('liked'))
+    dislike = Classroom_Food.objects.filter(food = food).aggregate(sum=Sum('disliked'))
+    print(liked)
+    values = [liked['sum'],dislike['sum']]
+    fig, ax = plt.subplots()
+    ax.pie(values,labels=labels,autopct='%1.1f%%', shadow=True,startangle=90)
+    ax.axis('equal')
+    plt.savefig("bargraph1.png")
+    return FileResponse(open("bargraph1.png", "rb"), content_type="image/png")
+
 
 
 

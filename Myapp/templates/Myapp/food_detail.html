@@ -1,0 +1,16 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Food Detail {% endblock %}
+{% block content %}
+<section class="section">
+    <h1>{{food.name}}</h1>
+    <hr>
+    <div class="center">
+        <img src="/Myapp/graphic_food/{{food.uuid}}/" alt="Bargraph">
+    </div>
+    <div class = "center">
+        <p><button class="btn btn-warning">{{disliked}}</button></p>
+        <p><button class="btn btn-primary">{{liked}}</button></p>
+    </div>
+</section>
+{% endblock %}

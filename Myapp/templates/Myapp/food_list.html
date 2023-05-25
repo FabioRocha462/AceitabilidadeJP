@@ -12,7 +12,7 @@
         {% for Food in object_list %}
         <tr>
             <td><a class="btn btn-success" href="#">{{ forloop.counter }}</a></td>
-            <td><a id="food_detail" class="btn btn-success" href="#">{{Food.name}}</a></td>
+            <td><a id="food_detail" class="btn btn-success" href="/Myapp/food_detail/{{Food.uuid}}/">{{Food.name}}</a></td>
             <td class="col-md-2 center-block text-center">
                 <a href="#" class="btn btn-primary">Editar</a>
                 <a href="/Myapp/delete/{{Food.uuid}}/" class="btn btn-danger">Remover</a>
