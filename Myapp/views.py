@@ -98,6 +98,7 @@ class Classroom_FoodDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         id = self.kwargs.get("pk")
         context['id'] = id
+        
         return context
 
 
