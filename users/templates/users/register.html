@@ -5,7 +5,8 @@
 <form action="" method="post" enctype="multipart/form-data" class="form-control">
     {% csrf_token %}
     {{form}}
-    <button class="button-form" type="submit">Register <i
-            class="icon-submit fa-solid fa-arrow-right-from-bracket"></i></button>
+    <div class="center">
+        <button class="button-form" type="submit">Register</button>
+    </div>
 </form>
 {% endblock %}
